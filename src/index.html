@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<html lang="de">
   <head>
-    <title>Hello, world!</title>
+    <title>Adventskalender</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
 
-  <body>
-      <script src="./script.js"></script>
-    <h1>Hello, world!</h1>
+  <body onload="createCalendar()">
+    <script src="./script.js"></script>
+    <div class="container" id="header">
+
+        <div class="item">
+            <p>advents-
+                kalender</p>
+        </div>
+    </div>
     
+    <div class="container" id="content">
+    </div>
   </body>
 </html>

@@ -1,3 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    background-color: pink;
+  background-color: #146b3a;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#header {
+  font-family: "ChristmasSmall1";
+  font-size: 44pt;
+  color: #f8b229;
+  text-align: center;
+}
+
+.door {
+    height: 150px;
+    width: 150px;
+    background-color: #BB2528;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.container .door {
+    align-items: center;
+    
+}
+
+/*All fonts*/
+@font-face {
+  font-family: "ChristmasBig6";
+  src: url("./fonts/SnowForSanta.ttf");
+}
+@font-face {
+  font-family: "ChristmasSmall3";
+  src: url("./fonts/holly_and_berries.ttf");
+}
+@font-face {
+  font-family: "ChristmasBig5";
+  src: url("./fonts/CityOfLights.ttf");
+}
+@font-face {
+  font-family: "ChristmasBubble";
+  src: url("./fonts/Bauble_Monogram.ttf");
+}
+@font-face {
+  font-family: "ChristmasBig4";
+  src: url("./fonts/ChristmasBig4.ttf");
+}
+@font-face {
+  font-family: "ChristmasBig3";
+  src: url("./fonts/Cartoon\ Blocks\ Christmas.otf");
+}
+@font-face {
+  font-family: "ChristmasBig2";
+  src: url("./fonts/Snowinter-Free-For-Personal-Use.ttf");
+}
+@font-face {
+  font-family: "ChristmasSmall2";
+  src: url("./fonts/ThePerfectChristmas.ttf");
+}
+@font-face {
+  font-family: "Candy";
+  src: url("./fonts/Candcu__.ttf");
+}
+@font-face {
+  font-family: "ChristmasBig1";
+  src: url("./fonts/PWHappyChristmas.ttf");
+}
+@font-face {
+  font-family: "ChristmasSmall1";
+  src: url("./fonts/PWChristmasfont.ttf");
+}
+@font-face {
+  font-family: "ChristmasLightsOutdoor";
+  src: url("./fonts/ChristmasLightsOutdoor.ttf");
 }
