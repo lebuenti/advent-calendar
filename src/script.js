@@ -44,6 +44,19 @@ const getRandomFontColor = () => {
   }
 };
 
+const getRandomBackgroundColor = () => {
+  let r = Math.floor(Math.random() * 3);
+
+  switch (r) {
+    case 0:
+      return "#BB2528";
+    case 1:
+      return "#ea4630";
+    case 2:
+      return "#6B1445";
+  }
+};
+
 const createCalendar = () => {
   const parent = document.getElementById("content");
   const days = [
@@ -57,6 +70,7 @@ const createCalendar = () => {
     newDiv.classList.add("container");
     var newContent = document.createTextNode(days[i]);
 
+    newDiv.style.backgroundColor = getRandomBackgroundColor();
     newDiv.style.fontFamily = getRandomFont();
     newDiv.style.fontSize = Math.random() * (54 - 42) + 42 + "pt";
     newDiv.style.color = getRandomFontColor();
@@ -64,7 +78,7 @@ const createCalendar = () => {
       "scale(" +
       (Math.random() * (110 - 75) + 75) / 100 +
       ") rotate(" +
-      (Math.random() * (7 + 7) - 7) +
+      (Math.random() * (5 + 5) - 5) +
       "deg)";
 
     newDiv.appendChild(newContent);
