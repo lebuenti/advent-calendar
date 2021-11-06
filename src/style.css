@@ -21,17 +21,24 @@ body {
 }
 
 .door {
-    height: 150px;
-    width: 150px;
-    
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 10px;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 10px;
+  height: 150px;
+  width: 150px;
+}
+
+.picture {
+  position: absolute;
+  visibility: hidden;
 }
 
 .container .door {
-    align-items: center;
-    
+  align-items: center;
+}
+
+img {
+  width: 100%;
 }
 
 /*All fonts*/

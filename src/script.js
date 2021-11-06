@@ -65,23 +65,35 @@ const createCalendar = () => {
   ];
 
   for (let i = 0; i < 24; i++) {
-    var newDiv = document.createElement("div");
-    newDiv.classList.add("door");
-    newDiv.classList.add("container");
-    var newContent = document.createTextNode(days[i]);
+    let door = document.createElement("div");
+    door.classList.add("door");
+    door.classList.add("container");
+    let doorText = document.createTextNode(days[i]);
 
-    newDiv.style.backgroundColor = getRandomBackgroundColor();
-    newDiv.style.fontFamily = getRandomFont();
-    newDiv.style.fontSize = Math.random() * (54 - 42) + 42 + "pt";
-    newDiv.style.color = getRandomFontColor();
-    newDiv.style.transform =
+    let transform =
       "scale(" +
       (Math.random() * (110 - 75) + 75) / 100 +
       ") rotate(" +
       (Math.random() * (5 + 5) - 5) +
       "deg)";
 
-    newDiv.appendChild(newContent);
-    parent.appendChild(newDiv);
+    door.style.backgroundColor = getRandomBackgroundColor();
+    door.style.fontFamily = getRandomFont();
+    door.style.fontSize = Math.random() * (54 - 42) + 42 + "pt";
+    door.style.color = getRandomFontColor();
+    door.style.transform = transform;
+
+    let pictureDiv = document.createElement("div");
+    pictureDiv.classList.add("container");
+    pictureDiv.classList.add("picture");
+    let img = document.createElement("img");
+    img.src = "./img/cat2.jpeg";
+
+    pictureDiv.appendChild(img);
+
+    door.appendChild(doorText);
+    parent.appendChild(door);
+
+    door.appendChild(pictureDiv);
   }
 };
