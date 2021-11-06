@@ -58,8 +58,16 @@ const getRandomBackgroundColor = () => {
 };
 
 const onDoorClicked = (event) => {
-  //if tag ist falsch ist gekommen
-  
+  let clickedDay = event.currentTarget.id;
+  const today = new Date();
+
+  if (
+    today.getFullYear() !== 2021 ||
+    today.getMonth() + 1 !== 12 ||
+    today.getDate() < clickedDay
+  ) {
+    return;
+  }
 
   let elem = document.getElementById(event.currentTarget.id);
 
@@ -80,7 +88,6 @@ const onDoorClicked = (event) => {
 
     picture.classList.add("visible");
     picture.classList.remove("hidden");
-
   } else if (Array.from(door.classList).includes("open")) {
     door.classList.add("close");
     door.classList.remove("open");
@@ -88,8 +95,6 @@ const onDoorClicked = (event) => {
     picture.classList.add("hidden");
     picture.classList.remove("visible");
   }
-
-  
 };
 
 const createCalendar = () => {
