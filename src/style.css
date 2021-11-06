@@ -16,10 +16,11 @@ body {
 .doorAndPictureContainer {
   overflow: hidden;
   position: relative; /*for mobile safari bc otherwise overflow:hidden not woking*/
-  border: 1px solid black;
+  border: 2px solid black;
   margin: 10px;
   border-radius: 10px;
   width: 150px;
+  height: 150px;
   cursor: pointer;
 }
 
@@ -35,13 +36,23 @@ body {
   width: 100%;
   z-index: 1;
 }
+.door p {
+  transition: opacity 0.5s ease-in-out;
+}
 
 .door.open {
   height: 0;
 }
 
+.door.open p {
+  opacity: 0;
+}
+
 .door.close {
   height: 150px;
+}
+.door.close p {
+  opacity: 1;
 }
 
 .picture {
@@ -50,10 +61,10 @@ body {
 }
 
 .picture.hidden {
-  visibility: hidden;
+  height: 0;
 }
 .picture.visible {
-  visibility: visible;
+  height: 100%;
 }
 
 .container .door {

@@ -121,8 +121,11 @@ const createCalendar = () => {
     door.style.fontSize = Math.random() * (54 - 42) + 42 + "pt";
     door.style.color = getRandomFontColor();
     door.style.backgroundColor = getRandomBackgroundColor();
+
+    const para = document.createElement("p");
     let doorText = document.createTextNode(days[i]);
-    door.appendChild(doorText);
+    para.appendChild(doorText);
+    door.appendChild(para);
 
     let pictureDiv = document.createElement("div");
     pictureDiv.classList.add("container");
