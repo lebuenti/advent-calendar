@@ -26,11 +26,20 @@ body {
   border-radius: 10px;
   height: 150px;
   width: 150px;
+  cursor: pointer;
+}
+
+.open {
 }
 
 .picture {
   position: absolute;
+}
+.picture.hidden {
   visibility: hidden;
+}
+.picture.visible {
+  visibility: visible;
 }
 
 .container .door {
@@ -61,10 +70,6 @@ img {
 @font-face {
   font-family: "ChristmasBig4";
   src: url("./fonts/ChristmasBig4.ttf");
-}
-@font-face {
-  font-family: "ChristmasBig3";
-  src: url("./fonts/Cartoon\ Blocks\ Christmas.otf");
 }
 @font-face {
   font-family: "ChristmasBig2";

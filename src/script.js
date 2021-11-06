@@ -13,7 +13,7 @@ const getRandomFont = () => {
     case 4:
       return "ChristmasBig4";
     case 5:
-      return "ChristmasBig3";
+      return "verdana";
     case 6:
       return "ChristmasBig2";
     case 7:
@@ -57,6 +57,39 @@ const getRandomBackgroundColor = () => {
   }
 };
 
+const onDoorClicked = (event) => {
+  //if tag ist gekommen
+  let elem = document.getElementById(event.currentTarget.id);
+
+  if (elem && Array.from(elem.classList).includes("close")) {
+    elem.classList.add("open");
+    elem.classList.remove("close");
+
+    let picture = Array.from(elem.children).find((htmlElem) =>
+      htmlElem.className.includes("picture")
+    );
+
+    if (picture) {
+      picture.classList.remove("hidden");
+      picture.classList.add("visible");
+    }
+  } else if (elem && Array.from(elem.classList).includes("open")) {
+    elem.classList.add("close");
+    elem.classList.remove("open");
+
+    let picture = Array.from(elem.children).find((htmlElem) =>
+      htmlElem.className.includes("picture")
+    );
+
+    if (picture) {
+      picture.classList.remove("visible");
+      picture.classList.add("hidden");
+    }
+  }
+  // else tag ist nicht richtig
+  //
+};
+
 const createCalendar = () => {
   const parent = document.getElementById("content");
   const days = [
@@ -68,7 +101,9 @@ const createCalendar = () => {
     let door = document.createElement("div");
     door.classList.add("door");
     door.classList.add("container");
+    door.classList.add("close");
     let doorText = document.createTextNode(days[i]);
+    door.id = days[i];
 
     let transform =
       "scale(" +
@@ -82,18 +117,19 @@ const createCalendar = () => {
     door.style.fontSize = Math.random() * (54 - 42) + 42 + "pt";
     door.style.color = getRandomFontColor();
     door.style.transform = transform;
+    door.onclick = onDoorClicked;
 
     let pictureDiv = document.createElement("div");
     pictureDiv.classList.add("container");
     pictureDiv.classList.add("picture");
+    pictureDiv.classList.add("hidden");
     let img = document.createElement("img");
     img.src = "./img/cat2.jpeg";
 
     pictureDiv.appendChild(img);
-
-    door.appendChild(doorText);
-    parent.appendChild(door);
-
     door.appendChild(pictureDiv);
+    door.appendChild(doorText);
+
+    parent.appendChild(door);
   }
 };
