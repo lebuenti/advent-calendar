@@ -13,6 +13,16 @@ body {
   flex-wrap: wrap;
 }
 
+.doorAndPictureContainer {
+  overflow: hidden;
+  position: relative; /*for mobile safari bc otherwise overflow:hidden not woking*/
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 10px;
+  width: 150px;
+  cursor: pointer;
+}
+
 #header {
   font-family: "ChristmasSmall1";
   font-size: 44pt;
@@ -21,20 +31,24 @@ body {
 }
 
 .door {
-  border: 1px solid black;
-  margin: 10px;
-  border-radius: 10px;
-  height: 150px;
-  width: 150px;
-  cursor: pointer;
+  transition: height 0.5s ease-in-out;
+  width: 100%;
+  z-index: 1;
 }
 
-.open {
+.door.open {
+  height: 0;
+}
+
+.door.close {
+  height: 150px;
 }
 
 .picture {
   position: absolute;
+  z-index: 0;
 }
+
 .picture.hidden {
   visibility: hidden;
 }
