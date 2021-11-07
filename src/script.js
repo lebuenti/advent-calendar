@@ -137,7 +137,7 @@ const createCalendar = () => {
     pictureDiv.classList.add("picture");
     pictureDiv.classList.add("hidden");
     let img = document.createElement("img");
-    img.src = "./img/cat2.jpeg";
+    img.src = "./img/" + days[i] + ".jpeg";
     pictureDiv.appendChild(img);
 
     container.appendChild(door);
