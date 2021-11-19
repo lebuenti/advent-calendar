@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<html lang="de">
+  <head>
+    <title>Adventskalender</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="./login.js"></script>
+  </head>
+
+  <body>
+    <form onsubmit="">
+      <div class="container login">
+        <div class="item login">
+          <label>username: </label>
+          <input
+            type="text"
+            placeholder="username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="item login">
+          <label>password: </label>
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="item login">
+          <button id="onLoginSubmit" type="submit" onclick="">Login</button>
+        </div>
+      </div>
+    </form>
+    <img id="imgChristmasTree" src="../icons/christmas-tree.png" width="256">
+
+  </body>
+</html>

@@ -1,3 +1,11 @@
+/*
+colors:
+yellow: #f8b229
+red: #BB2528
+green: #146b3a
+
+*/
+
 * {
   margin: 0;
   padding: 0;
@@ -11,6 +19,48 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.container.login {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+form {
+  text-align: center;
+  margin: 40px;
+  font-size: 20pt;
+}
+
+.item.login{
+  padding: 10px;
+  color: #FCE2AF;
+}
+
+.item.login > * {
+  font-size: 14pt;
+  padding: 5px;
+}
+
+.item.login > label {
+  font-size: 16pt;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#onLoginSubmit {
+  padding: 10px;
+  background-color: #f8b229;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#imgChristmasTree {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 
 .doorAndPictureContainer {
