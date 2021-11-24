@@ -1,41 +1,37 @@
-//if eingeloggt == true
-// fetch("assets/partials/calendar.html")
-//   .then(response => response.json())
-//   .then(data => console.log(data));
-
-fetch("assets/partials/calendar.html")
+if (localStorage.getItem("adventCalendarToken") != null) {
+  fetch("assets/partials/calendar.html")
+    .then((response) => {
+      return response.text();
+    })
+    .then((result) => {
+      let div = document.createElement("div");
+      div.innerHTML = result;
+      document.body.appendChild(div);
+      createCalendar();
+    });
+} else {
+  history.pushState({page: 1}, "advent calendar", "login");
+  fetch("assets/partials/login.html")
   .then((response) => {
     return response.text();
   })
   .then((result) => {
-    console.log(result);
-    
     let div = document.createElement("div");
     div.innerHTML = result;
-
-    console.log(div);
-
     document.body.appendChild(div);
-
-    createCalendar();
   });
+}
 
-// fetch api -> partials/calender.html
-//  bei fertig laden -> createCalendar();
-//else
-// fetch api -> partials/login.html
-//  url = /signin
+const onSubmit = () => {
 
-// const onSubmit = () => {
+  let password = document.getElementById("inputPassword").value;
+  let username = document.getElementById("inputUsername").value;
 
-//   let password = document.getElementById("inputPassword").value;
-//   let username = document.getElementById("inputUsername").value;
+  console.log(password);
+  console.log(username);
 
-//   console.log(password);
-//   console.log(username);
-
-//  //fetch api -> POST signin und dort create token
-// }
+ //fetch api -> POST signin und dort create token
+}
 
 const getRandomFont = () => {
   let r = Math.floor(Math.random() * 11);

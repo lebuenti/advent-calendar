@@ -3,6 +3,18 @@ const fs = require("fs");
 
 const port = 9000;
 
+const parseQuery = (queryString) => {
+  var query = {};
+  var pairs = (
+    queryString[0] === "?" ? queryString.substr(1) : queryString
+  ).split("&");
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i].split("=");
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || "");
+  }
+  return query;
+};
+
 let handleRequest = (request, response) => {
   let contentType = "";
   if (request.url.endsWith(".js")) {
@@ -16,14 +28,24 @@ let handleRequest = (request, response) => {
     "Content-Type": contentType,
   });
 
-  // if (request.method === "POST" && request.url === "/signin") {
-  //   //dann so ein jwt erstellen.
-  // }
+  if (request.method === "POST" && request.url.includes("/login")) {
+    var dataString = "";
+
+    request.on("data", function (data) {
+      dataString += data;
+    });
+
+    request.on("end", function () {
+      let parsedString = parseQuery(dataString);
+      // console.log(parsedString["username"]);
+      // console.log(parsedString["password"]);
+    });
+  }
 
   let f;
   if (request.url.startsWith("/assets")) {
     f = "." + request.url;
-  } else if (request.url === "/") {
+  } else if (request.url === "/" || request.url === "/login") {
     f = "assets/index.html";
   } else if (request.url.startsWith("/calendar_images")) {
     f = "." + request.url;
