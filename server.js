@@ -1,5 +1,5 @@
-let http = require("http");
-let fs = require("fs");
+const http = require("http");
+const fs = require("fs");
 
 const port = 9000;
 
@@ -16,11 +16,17 @@ let handleRequest = (request, response) => {
     "Content-Type": contentType,
   });
 
+  // if (request.method === "POST" && request.url === "/signin") {
+  //   //dann so ein jwt erstellen.
+  // }
+
   let f;
-  if (request.url === "/") {
-    f = "./src/index.html";
-  } else {
-    f = "src" + request.url;
+  if (request.url.startsWith("/assets")) {
+    f = "." + request.url;
+  } else if (request.url === "/") {
+    f = "assets/index.html";
+  } else if (request.url.startsWith("/calendar_images")) {
+    f = "." + request.url;
   }
 
   fs.readFile(f, null, (error, data) => {

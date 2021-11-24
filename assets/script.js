@@ -1,3 +1,42 @@
+//if eingeloggt == true
+// fetch("assets/partials/calendar.html")
+//   .then(response => response.json())
+//   .then(data => console.log(data));
+
+fetch("assets/partials/calendar.html")
+  .then((response) => {
+    return response.text();
+  })
+  .then((result) => {
+    console.log(result);
+    
+    let div = document.createElement("div");
+    div.innerHTML = result;
+
+    console.log(div);
+
+    document.body.appendChild(div);
+
+    createCalendar();
+  });
+
+// fetch api -> partials/calender.html
+//  bei fertig laden -> createCalendar();
+//else
+// fetch api -> partials/login.html
+//  url = /signin
+
+// const onSubmit = () => {
+
+//   let password = document.getElementById("inputPassword").value;
+//   let username = document.getElementById("inputUsername").value;
+
+//   console.log(password);
+//   console.log(username);
+
+//  //fetch api -> POST signin und dort create token
+// }
+
 const getRandomFont = () => {
   let r = Math.floor(Math.random() * 11);
 
@@ -61,13 +100,9 @@ const onDoorClicked = (event) => {
   let clickedDay = event.currentTarget.id;
   const today = new Date();
 
-  if (
-    today.getFullYear() !== 2021 ||
-    today.getMonth() + 1 !== 12 ||
-    today.getDate() < clickedDay
-  ) {
-    return;
-  }
+  //   if (today.getFullYear() !== 2021 || today.getMonth() + 1 !== 12 || today.getDate() < clickedDay) {
+  //     return;
+  //   }
 
   let elem = document.getElementById(event.currentTarget.id);
 
@@ -137,7 +172,7 @@ const createCalendar = () => {
     pictureDiv.classList.add("picture");
     pictureDiv.classList.add("hidden");
     let img = document.createElement("img");
-    img.src = "./img/" + days[i] + ".jpeg";
+    img.src = "../calendar_images/cats/" + days[i] + ".jpeg";
     pictureDiv.appendChild(img);
 
     container.appendChild(door);

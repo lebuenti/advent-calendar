@@ -128,7 +128,7 @@ img {
 /*All fonts*/
 @font-face {
   font-family: "ChristmasBig6";
-  src: url("./fonts/SnowForSanta.ttf");
+  src: url("../assets/fonts/SnowForSanta.ttf");
 }
 @font-face {
   font-family: "ChristmasSmall3";
