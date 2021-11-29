@@ -1,21 +1,10 @@
+const jwt = require("jsonwebtoken");
 const http = require("http");
 const fs = require("fs");
 
 const port = 9000;
 
-const parseQuery = (queryString) => {
-  var query = {};
-  var pairs = (
-    queryString[0] === "?" ? queryString.substr(1) : queryString
-  ).split("&");
-  for (var i = 0; i < pairs.length; i++) {
-    var pair = pairs[i].split("=");
-    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || "");
-  }
-  return query;
-};
-
-let handleRequest = (request, response) => {
+let handleRequest = async (request, response) => {
   let contentType = "";
   if (request.url.endsWith(".js")) {
     contentType = "application/javascript";
@@ -28,19 +17,31 @@ let handleRequest = (request, response) => {
     "Content-Type": contentType,
   });
 
-  if (request.method === "POST" && request.url.includes("/login")) {
-    var dataString = "";
-
-    request.on("data", function (data) {
-      dataString += data;
+  if (request.method === "POST" && request.url.includes("/signin")) {
+    const body = await new Promise((resolve, reject) => {
+      let b = [];
+      request
+      .on("data", (chunk) => {
+        b.push(chunk);
+      })
+      .on("end", () => {
+        b = Buffer.concat(b).toString();
+        resolve(b);
+      })
+      .on("error", reject);
     });
-
-    request.on("end", function () {
-      let parsedString = parseQuery(dataString);
-      // console.log(parsedString["username"]);
-      // console.log(parsedString["password"]);
-    });
+    let token = createToken(body);
+    if (!token) {
+      response.writeHead(401);
+      response.end("Username or password invalid");
+      return;
+    } else {
+      response.json({ token });
+      return;
+    }
   }
+
+  console.log("Incoming request" + request.url);
 
   let f;
   if (request.url.startsWith("/assets")) {
@@ -49,10 +50,17 @@ let handleRequest = (request, response) => {
     f = "assets/index.html";
   } else if (request.url.startsWith("/calendar_images")) {
     f = "." + request.url;
+  } else if (request.url === "/favicon.ico") {
+    return;
+  } else {
+    response.writeHead(404);
+    response.write("Whoops! File not found!");
+    return;
   }
 
   fs.readFile(f, null, (error, data) => {
     if (error) {
+      console.log("Not found?")
       response.writeHead(404);
       response.write("Whoops! File not found!");
     } else {
@@ -64,3 +72,18 @@ let handleRequest = (request, response) => {
 
 http.createServer(handleRequest).listen(port);
 console.log("server running on port " + port);
+
+const createToken = (body) => {
+  const { username, password } = body;
+
+  if (!username || !password || users[username] !== password) {
+    return;
+  }
+
+  const token = jwt.sign({ username }, jwtKey, {
+    algorithm: "HS256",
+    expiresIn: jwtExpirySeconds,
+  });
+
+  return token;
+};

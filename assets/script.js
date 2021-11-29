@@ -10,28 +10,41 @@ if (localStorage.getItem("adventCalendarToken") != null) {
       createCalendar();
     });
 } else {
-  history.pushState({page: 1}, "advent calendar", "login");
+  history.pushState({ page: 1 }, "advent calendar", "login");
   fetch("assets/partials/login.html")
-  .then((response) => {
-    return response.text();
-  })
-  .then((result) => {
-    let div = document.createElement("div");
-    div.innerHTML = result;
-    document.body.appendChild(div);
-  });
+    .then((response) => {
+      return response.text();
+    })
+    .then((result) => {
+      let div = document.createElement("div");
+      div.innerHTML = result;
+      document.body.appendChild(div);
+    });
 }
 
 const onSubmit = () => {
+  var payload = {
+    username: document.getElementById("inputUsername").value,
+    password: document.getElementById("inputPassword").value
+  };
 
-  let password = document.getElementById("inputPassword").value;
-  let username = document.getElementById("inputUsername").value;
-
-  console.log(password);
-  console.log(username);
-
- //fetch api -> POST signin und dort create token
-}
+  fetch("/signin", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    mode: "cors", //TODO noch loeschen
+    headers: new Headers({ "content-type": "application/json" })
+  })
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      // console.log(JSON.stringify(data));
+    })
+    .catch(function () {
+      alert("Wrong username or password");
+      
+    });
+};
 
 const getRandomFont = () => {
   let r = Math.floor(Math.random() * 11);
