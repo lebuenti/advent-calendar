@@ -25,24 +25,26 @@ if (localStorage.getItem("adventCalendarToken") != null) {
 const onSubmit = () => {
   var payload = {
     username: document.getElementById("inputUsername").value,
-    password: document.getElementById("inputPassword").value
+    password: document.getElementById("inputPassword").value,
   };
 
   fetch("/signin", {
     method: "POST",
     body: JSON.stringify(payload),
     mode: "cors", //TODO noch loeschen
-    headers: new Headers({ "content-type": "application/json" })
+    headers: new Headers({ "content-type": "application/json" }),
   })
-    .then(function (res) {
+    .then((res) => {
       return res.json();
     })
-    .then(function (data) {
-      // console.log(JSON.stringify(data));
+    .then((data) => {
+      localStorage.setItem("adventCalendarToken", data.auth);
+      history.pushState({ page: 1 }, "advent calendar", "/");
+      location.reload();
     })
-    .catch(function () {
-      alert("Wrong username or password");
-      
+    .catch((error) => {
+      alert("Wrong username or wrong password");
+      location.reload();
     });
 };
 
