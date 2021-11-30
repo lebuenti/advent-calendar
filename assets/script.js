@@ -31,7 +31,6 @@ const onSubmit = () => {
   fetch("/signin", {
     method: "POST",
     body: JSON.stringify(payload),
-    mode: "cors", //TODO noch loeschen
     headers: new Headers({ "content-type": "application/json" }),
   })
     .then((res) => {
@@ -46,21 +45,6 @@ const onSubmit = () => {
       alert("Wrong username or wrong password");
       location.reload();
     });
-};
-
-const parseJwt = (token) => {
-  var base64Url = token.split(".")[1];
-  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  var jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split("")
-      .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-      })
-      .join("")
-  );
-
-  return JSON.parse(jsonPayload);
 };
 
 const getRandomFont = () => {
@@ -126,11 +110,7 @@ const onDoorClicked = (event) => {
   let clickedDay = event.currentTarget.id;
   const today = new Date();
 
-  if (
-    today.getFullYear() !== 2021 ||
-    today.getMonth() + 1 !== 12 ||
-    today.getDate() < clickedDay
-  ) {
+  if ( today.getFullYear() !== 2021 || today.getMonth() + 1 !== 12 || today.getDate() < clickedDay) {
     return;
   }
 
@@ -148,6 +128,24 @@ const onDoorClicked = (event) => {
   }
 
   if (Array.from(door.classList).includes("close")) {
+    const token = localStorage.getItem("adventCalendarToken");
+
+    fetch("/image/" + clickedDay, {
+      headers: new Headers({ auth: token }),
+    })
+      .then((response) => {
+        return response.blob();
+      })
+      .then((imageBlob) => {
+        const imageObjectURL = URL.createObjectURL(imageBlob);
+        let img = picture.querySelector("img");
+        img.src = imageObjectURL;
+      })
+      .catch(error => {
+        alert("You are not logged in.");
+        console.error(error);
+      }) ;
+
     door.classList.add("open");
     door.classList.remove("close");
 
@@ -203,15 +201,6 @@ const createCalendar = () => {
     pictureDiv.classList.add("hidden");
     let img = document.createElement("img");
 
-    const token = localStorage.getItem("adventCalendarToken");
-    const tokenData = parseJwt(token);
-    if (!token || !tokenData) {
-      console.error("User is not logged in.");
-      location.reload();
-      return;
-    }
-    img.src =
-      "../calendar_images/" + tokenData.username + "/" + days[i] + ".jpeg";
     pictureDiv.appendChild(img);
 
     container.appendChild(door);

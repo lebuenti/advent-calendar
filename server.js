@@ -5,6 +5,8 @@ const fs = require("fs");
 
 const port = 9000;
 
+const usernames = ["FLORI_LEA", "CKA", "MAEDELS", "BA_IT_GIRLS"];
+
 let handleRequest = async (request, response) => {
   let contentType = "";
   if (request.url.endsWith(".js")) {
@@ -49,13 +51,27 @@ let handleRequest = async (request, response) => {
     f = "." + request.url;
   } else if (request.url === "/" || request.url === "/login") {
     f = "assets/index.html";
-  } else if (request.url.startsWith("/calendar_images")) {
-    f = "." + request.url;
+  } else if (request.url.startsWith("/image/")) {
+    const token = request.headers.auth;
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_KEY);
+      const splitted = request.url.split("/");
+      f = "calendar_images/" + decoded.username + "/" + splitted[splitted.length - 1] + ".jpeg";
+    } catch (error) {
+      console.error(error);
+      response.writeHead(401);
+      response.end();
+      return;
+    }
+
   } else if (request.url === "/favicon.ico") {
+    response.end();
     return;
   } else {
     response.writeHead(404);
     response.write("Whoops! File not found!");
+    response.end();
     return;
   }
 
@@ -77,8 +93,6 @@ const createToken = (body) => {
   const tmp = JSON.parse(body);
   const { username, password } = tmp;
 
-  const usernames = ["FLORI_LEA", "CKA", "MAEDELS", "BA_IT_GIRLS"];
-
   if (!username || !password) {
     return;
   }
@@ -95,7 +109,7 @@ const createToken = (body) => {
   const hash = process.env[s];
 
   const res = bcrypt.compareSync(password, hash);
-  
+
   if (res === true) {
     return jwt.sign({ username }, process.env.JWT_KEY, {
       algorithm: "HS256",
