@@ -1,2 +1,5 @@
 your_images_here/
 node_modules/
+
+calendar_images/*
+!calendar_images/cats/
