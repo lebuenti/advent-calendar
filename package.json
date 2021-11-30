@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/lebuenti/advent-calendar#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1"
   }
 }

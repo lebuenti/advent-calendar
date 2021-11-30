@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const http = require("http");
 const fs = require("fs");
@@ -76,15 +77,29 @@ const createToken = (body) => {
   const tmp = JSON.parse(body);
   const { username, password } = tmp;
 
-  if (!username || !password || users[username] !== password) {
-    //TODO password hashen.
+  const usernames = ["FLORI_LEA", "CKA", "MAEDELS", "BA_IT_GIRLS"];
+
+  if (!username || !password) {
     return;
   }
 
-  const token = jwt.sign({ username }, jwtKey, {
-    algorithm: "HS256",
-    expiresIn: jwtExpirySeconds,
+  const index = usernames.findIndex((element) => {
+    return element.toLowerCase() === username.toLowerCase();
   });
 
-  return token;
+  if (index === -1) {
+    return;
+  }
+
+  let s = username.toUpperCase();
+  const hash = process.env[s];
+
+  const res = bcrypt.compareSync(password, hash);
+  
+  if (res === true) {
+    return jwt.sign({ username }, process.env.JWT_KEY, {
+      algorithm: "HS256",
+      expiresIn: "31d",
+    });
+  }
 };

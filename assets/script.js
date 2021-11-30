@@ -48,6 +48,21 @@ const onSubmit = () => {
     });
 };
 
+const parseJwt = (token) => {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
 const getRandomFont = () => {
   let r = Math.floor(Math.random() * 11);
 
@@ -183,7 +198,16 @@ const createCalendar = () => {
     pictureDiv.classList.add("picture");
     pictureDiv.classList.add("hidden");
     let img = document.createElement("img");
-    img.src = "../calendar_images/cats/" + days[i] + ".jpeg";
+
+    const token = localStorage.getItem("adventCalendarToken");
+    const tokenData = parseJwt(token);
+    if (!token || !tokenData) {
+      console.error("User is not logged in.");
+      location.reload();
+      return;
+    }
+    img.src =
+      "../calendar_images/" + tokenData.username + "/" + days[i] + ".jpeg";
     pictureDiv.appendChild(img);
 
     container.appendChild(door);
