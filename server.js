@@ -57,7 +57,7 @@ let handleRequest = async (request, response) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_KEY);
       const splitted = request.url.split("/");
-      f = "calendar_images/" + decoded.username + "/" + splitted[splitted.length - 1] + ".jpeg";
+      f = "calendar_images/" + decoded.username.toLowerCase() + "/" + splitted[splitted.length - 1] + ".jpeg";
     } catch (error) {
       console.error(error);
       response.writeHead(401);
