@@ -5,7 +5,7 @@ const fs = require("fs");
 
 const port = 9000;
 
-const usernames = ["FLORI_LEA", "CKA", "MAEDELS", "BA_IT_GIRLS"];
+const usernames = ["CATS"];
 
 let handleRequest = async (request, response) => {
   let contentType = "";

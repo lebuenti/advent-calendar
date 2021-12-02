@@ -125,6 +125,13 @@ img {
   width: 100%;
 }
 
+#licence {
+  color: white;
+  margin-top: 40px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 8pt;
+}
+
 /*All fonts*/
 @font-face {
   font-family: "ChristmasBig6";
