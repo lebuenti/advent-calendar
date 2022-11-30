@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const http = require("http");
 const fs = require("fs");
+const path = require("path");
 
 const port = 9000;
 
@@ -14,6 +15,8 @@ let handleRequest = async (request, response) => {
   } else if (request.url.endsWith(".html")) {
     contentType = "text/html";
   } else if (request.url.endsWith(".css")) {
+    contentType = "text/css";
+  } else if (request.url.endsWith(".jpeg")) {
     contentType = "text/css";
   }
   response.writeHead(200, {
@@ -47,13 +50,13 @@ let handleRequest = async (request, response) => {
   }
 
   let f;
+
   if (request.url.startsWith("/assets")) {
-    f = "." + request.url;
+    f = path.join(__dirname, request.url);
   } else if (request.url === "/" || request.url === "/login") {
     f = "assets/index.html";
   } else if (request.url.startsWith("/image/")) {
     const token = request.headers.auth;
-
     try {
       const decoded = jwt.verify(token, process.env.JWT_KEY);
       const splitted = request.url.split("/");
