@@ -108,9 +108,8 @@ const getRandomBackgroundColor = () => {
 
 const onDoorClicked = (event) => {
   let clickedDay = event.currentTarget.id;
-  const today = new Date();
 
-  if ( today.getFullYear() !== 2021 || today.getMonth() + 1 !== 12 || today.getDate() < clickedDay) {
+  if ( new Date().getMonth() + 1 !== 12 || new Date().getDate() < clickedDay) {
     return;
   }
 
